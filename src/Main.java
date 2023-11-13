@@ -1,6 +1,8 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
         System.out.println(shouldWakeUp(true,1));
         System.out.println(shouldWakeUp(false,2));
         System.out.println(shouldWakeUp(true,8));
@@ -20,75 +22,65 @@ public class Main {
 
         System.out.println("---------------");
 
-        System.out.println(area(5.0,4.0));
-        System.out.println(area(-1.0,4.0));
+        try{
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter width of rectangle: ");
+            double width = scanner.nextDouble();
+            System.out.println("Enter height of rectangle: ");
+            double height = scanner.nextDouble();
+            System.out.println("Area of rectangle: " + area(width,height));
+        }catch(Exception ex){
+            System.out.println("Invalid Input");
+        }
 
         System.out.println("---------------");
 
-        System.out.println(area(5.0));
-        System.out.println(area(-1));
+        try{
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter radius of circle: ");
+            double radius = scanner.nextDouble();
+            System.out.println("Area of circle: " + area(radius));
+        }catch(Exception ex){
+            System.out.println("Invalid Input");
+        }
     }
 
     public static boolean shouldWakeUp(boolean dogSound, int time){
-
-        if(dogSound && (time < 8 || time>20)){
-            if(time < 0 || time>23) {
-                return false;
-
-            }else{
-                return true;
-            }
-        }else{
-            return false;
-        }
+        //Guarding
+        if(time < 0 || time>23) return false;
+        if(!dogSound) return false;
+        return time < 8 || time >= 20;
     }
 
     public static boolean hasTeen(int... ages){
-        boolean result = false;
-        for(int age:ages){
-            if(age >= 13 && age<=19){
-                result = true;
-                break;
-            }else{
-                result = false;
+        for(int age:ages) {
+            if (age >= 13 && age <= 19) {
+                return true;
             }
         }
-        return result;
+            return false;
     }
 
-    public static boolean isCatPlaying(boolean summer, int degree){
-        boolean result = false;
-        if(summer && degree <= 45 && degree>=25){
-            result = true;
-        }else if(!summer && degree <= 35 && degree>=25){
-            result= true;
-        }else{
-            result = false;
+    public static boolean isCatPlaying(boolean isSummer, int temperature){
+        if(isSummer){
+            return temperature <= 45 && temperature>=25;
         }
-        return result;
+        return temperature <= 35 && temperature>=25;
     }
 
-    public static double area(double... nums){
-        double result = 1;
-        for(double num:nums){
-            if(num < 0){
-                result = -1;
-                break;
-            }else{
-                result *= num;
-            }
+    public static double area(double width, double height){
+        if(width < 0 || height < 0){
+            System.out.println("width ve height 0 dan büyük olmalıdır.");
+            return -1;
         }
-        return result;
+        return width * height;
     }
 
     public static double area(double radius){
-        double result = 1;
-        if(radius < 0){
-            result = -1;
-        }else{
-            result = radius * radius * Math.PI;
+        if(radius<0){
+            return -1;
         }
-        return result;
+        return Math.PI * radius * radius;
     }
 
 
